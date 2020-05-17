@@ -1,0 +1,5 @@
+INSERT INTO CUSTOMERS VALUES(1,'jaym1','jaym1@test.com')
+INSERT INTO CUSTOMERS VALUES(2,'jaym2','jaym2@test.com')
+INSERT INTO CUSTOMERS VALUES(3,'jaym3','jaym3@test.com')
+INSERT INTO CUSTOMERS VALUES(4,'jaym4','jaym4@test.com')
+INSERT INTO CUSTOMERS VALUES(5,'jaym5','jaym5@test.com')
