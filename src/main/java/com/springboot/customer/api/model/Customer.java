@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="customers")
@@ -11,6 +15,9 @@ public class Customer {
 	@javax.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty(message="Email cannot be null or empty")
+	@Email
 	private String email;
 
 	public Integer getId() {
@@ -36,7 +43,8 @@ public class Customer {
 	public void setCuser(String cuser) {
 		this.cuser = cuser;
 	}
-
+    
+	@NotNull(message="User Name should not be null")
 	private String cuser;
 
 	@Override
