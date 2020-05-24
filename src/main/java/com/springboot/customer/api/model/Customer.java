@@ -10,15 +10,37 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer {
 	@javax.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@NotEmpty(message="Email cannot be null or empty")
+
+	@NotEmpty(message = "Email cannot be null or empty")
 	@Email
 	private String email;
+
+	@NotEmpty(message = "firstName cannot be null or empty")
+	private String firstName;
+	
+	@NotEmpty(message = "lastName cannot be null or empty")
+	private String lastName;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	public Integer getId() {
 		return id;
@@ -43,13 +65,16 @@ public class Customer {
 	public void setCuser(String cuser) {
 		this.cuser = cuser;
 	}
-    
-	@NotNull(message="User Name should not be null")
+
+	@NotNull(message = "User Name should not be null")
 	private String cuser;
 
 	@Override
 	public String toString() {
-		return "RestAPIEntity [id=" + id + ", email=" + email + ", cuser=" + cuser + "]";
+		return "Customer [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", cuser=" + cuser + "]";
 	}
+
+	
 
 }

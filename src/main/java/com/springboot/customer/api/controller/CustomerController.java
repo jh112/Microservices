@@ -2,6 +2,8 @@ package com.springboot.customer.api.controller;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,31 +22,35 @@ import io.swagger.annotations.ApiOperation;
 @Api(value="Customer Service")
 @RestController
 public class CustomerController {
+	
+	private static final Logger logger =  LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
 	private CustomerService customerService;
     @ApiOperation(value="Save customer")
 	@PostMapping(value = "/customers", consumes = { "application/json" })
-	public Customer customers1(@RequestBody Customer customers) {
+	public Customer customerPost(@RequestBody Customer customers) {
+    	logger.info("Process start of Registreation");
 		return customerService.saveCustomer(customers);
 
 	}
     @ApiOperation(value="Search customer")
 	@GetMapping(value = "/customers/{id}")
-	public Optional<Customer> customers(@PathVariable int id) {
-
+	public Optional<Customer> getCustomers(@PathVariable int id) {
+    	logger.info("Process start of Search customer details");
 		return customerService.getCustomer(id);
 
 	}
     @ApiOperation(value="Update customer")
 	@PutMapping(value = "/customers", consumes = { "application/json" })
-	public Customer customers2(@RequestBody Customer customers) {
-
+	public Customer updateCustomer(@RequestBody Customer customers) {
+    	logger.info("Process start of Update customer details");
 		return customerService.saveCustomer(customers);
 	}
     @ApiOperation(value="Delete customer")
 	@DeleteMapping(value = "/customers/{id}")
-	public void customers4(@PathVariable int id) {
+	public void deleteCustomer(@PathVariable int id) {
+    	logger.info("Process start of delete customer details");
 		customerService.deletCustomer(id);
 
 	}

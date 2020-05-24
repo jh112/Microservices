@@ -80,7 +80,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>Customer-Services</finalName>
+	<finalName>CustomerRegistration</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
