@@ -5,6 +5,10 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 email VARCHAR(250),
 cuser VARCHAR(250),
 first_name VARCHAR(250),
-last_name VARCHAR(250)
+last_name VARCHAR(250),
+city_name VARCHAR(250),
+state_name VARCHAR(250),
+country_name VARCHAR(250),
+password VARCHAR(250)
 
 )

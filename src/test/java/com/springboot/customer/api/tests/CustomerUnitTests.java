@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.springboot.customer.api.dao.CustRepo;
 import com.springboot.customer.api.model.Customer;
 import com.springboot.customer.api.service.CustomerService;
+import com.springboot.customer.exception.CustomerServiceException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerUnitTests {
@@ -21,7 +22,7 @@ public class CustomerUnitTests {
 	private CustRepo custRepo;
 
 	@Test
-	public void saveCustomerSuccessful() {
+	public void saveCustomerSuccessful() throws CustomerServiceException {
 		customerService.saveCustomer(getCustomer());
 	}
 

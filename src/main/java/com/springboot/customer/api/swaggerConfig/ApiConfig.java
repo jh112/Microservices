@@ -16,16 +16,14 @@ public class ApiConfig {
 	
 	@Bean
     public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2).groupName("Jay Mevada").apiInfo(apiInfo())
-        		.select().paths(PathSelectors.any()).build();  
+        return new Docket(DocumentationType.SWAGGER_2).groupName("Jay Mevada Project").apiInfo(apiInfo())
+        		.select().paths(PathSelectors.regex("/customers.*")).build();  
                                             
     }
 	
 	private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Customer Service")
-        		.description("Customer Service Microservice")
-        		.license("Approved")
-        		.licenseUrl("www.google.com")
+        return new ApiInfoBuilder().title("Customer Registration Microservice")
+        		.description("Customer Registration Microservice")
         		.version("1.0.0").build();
     }
 }
