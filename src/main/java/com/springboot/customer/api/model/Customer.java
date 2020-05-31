@@ -1,10 +1,12 @@
 package com.springboot.customer.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModel;
@@ -19,25 +21,37 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotEmpty(message = "Email cannot be null or empty")
+	@NotBlank(message = "Email cannot be null or empty")
 	@Email
+	@Column(name = "email", unique = true)
 	private String email;
 
-	@NotEmpty(message = "firstName cannot be null or empty")
+	@NotBlank(message = "firstName cannot be null or empty")
 	private String firstName;
 
-	@NotEmpty(message = "lastName cannot be null or empty")
+	@NotBlank(message = "lastName cannot be null or empty")
 	private String lastName;
 
-	@NotEmpty(message = "Customer Username cannot be null or empty")
+	@NotBlank(message = "Customer Username cannot be null or empty")
+	@Column(name = "cuser", unique = true)
 	private String cuser;
 
-	@NotEmpty(message = "password cannot be null or empty")
+	@NotBlank(message = "password cannot be null or empty")
 	private String password;
 
 	private String cityName;
 	private String stateName;
 	private String countryName;
+	private boolean status;
+
+	@ApiModelProperty(position = 10, required = true, hidden = true, notes = "Status (Active or Inactive) for customer email")
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	@ApiModelProperty(position = 2, required = true, notes = "used to display first name")
 	public String getFirstName() {
@@ -118,6 +132,13 @@ public class Customer {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", cuser=" + cuser + ", password=" + password + ", cityName=" + cityName + ", stateName=" + stateName
+				+ ", countryName=" + countryName + "]";
 	}
 
 }

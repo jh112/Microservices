@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.springboot.customer.api.model.Customer;
 
-public class CustomerIntegrationTests extends SpringBootCustomerApplicationTests {
+public class CustomerIntegrationTest extends SpringBootCustomerApplicationTests {
 
 	@Autowired
 	TestRestTemplate testRestTemplate;
@@ -28,10 +28,10 @@ public class CustomerIntegrationTests extends SpringBootCustomerApplicationTests
 	@Test
 	public void getCustomers() {
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<Customer> response = testRestTemplate.exchange(createURLWithPort("/customers/1"), HttpMethod.GET,
+		ResponseEntity<Customer> response = testRestTemplate.exchange(createURLWithPort("/customers/Jaym@test.com"), HttpMethod.GET,
 				entity, Customer.class);
-		org.junit.Assert.assertEquals("test1", response.getBody().getFirstName());
-
+		org.junit.Assert.assertEquals("Jay", response.getBody().getFirstName());
+		org.junit.Assert.assertEquals("Mevada", response.getBody().getLastName());
 	}
 
 	private String createURLWithPort(String uri) {

@@ -1,13 +1,11 @@
 package com.springboot.customer.api.service;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springboot.customer.api.dao.CustRepo;
+import com.springboot.customer.api.dao.CustomerRepository;
 import com.springboot.customer.api.model.Customer;
 import com.springboot.customer.exception.CustomerServiceException;
 
@@ -17,41 +15,62 @@ public class CustomerService {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
 	@Autowired
-	private CustRepo custRepo;
+	private CustomerRepository custRepo;
 
 	public Customer saveCustomer(Customer customers) throws CustomerServiceException {
 		try {
+
 			logger.info("Customer Registration details updation");
 			custRepo.save(customers);
-		} catch (Exception ex) {
-			throw new CustomerServiceException("Exception duering customer registration: " + customers);
+			logger.info("Customer Registration details inserted or updated into database successfully");
+		} catch (Exception e) {
+			throw new CustomerServiceException(
+					"Exception during customer registration because of username duplicate: " + customers.getCuser());
 		}
-
 		return customers;
 
 	}
 
-	public Optional<Customer> getCustomer(int id) throws CustomerServiceException {
-		Optional<Customer> customerDetails = null;
-		try {
-			logger.info("Search customer");
-			customerDetails = custRepo.findById(id);
-		} catch (Exception ex) {
-			throw new CustomerServiceException("Exception during search customer:" + id);
-		}
+	public Customer getCustomer(String email) throws CustomerServiceException {
+		Customer customerDetails = null;
 
+		logger.info("Search customer");
+		customerDetails = custRepo.findByEmailIgnoreCase(email);
+		logger.info("Customer object: " + customerDetails);
+		if (customerDetails == null) {
+			throw new CustomerServiceException("Customer is not found: " + email);
+		}
+		logger.info("Customer is found in search criteria");
 		return customerDetails;
+	}
+
+	public void deletCustomer(String email) throws CustomerServiceException {
+
+		logger.info("Delete Cutomer");
+		Customer customerOne = custRepo.findByEmailIgnoreCase(email);
+		logger.info("CustomerOne object: " + customerOne);
+		if (customerOne == null) {
+			throw new CustomerServiceException("Customer is not found: " + email);
+		}
+		custRepo.delete(customerOne);
+		logger.info("Delete Customer successfully");
 
 	}
 
-	public void deletCustomer(int id) throws CustomerServiceException {
-		try {
-			logger.info("Delete Cutomer");
-			Customer customerOne = custRepo.getOne(id);
-			custRepo.delete(customerOne);
-		} catch (Exception ex) {
-			throw new CustomerServiceException("Exception during delete customer:" + id);
-		}
+	
+
+	public Customer getConfirmEmail(String customerDetails) {
+
+		Customer confirmEmail = custRepo.findByEmailIgnoreCase(customerDetails);
+		return confirmEmail;
+
+	}
+
+	public Customer getCuserDetails(String cuser) {
+
+		Customer cuserDetails = custRepo.findByCuserIgnoreCase(cuser);
+		return cuserDetails;
+
 	}
 
 }

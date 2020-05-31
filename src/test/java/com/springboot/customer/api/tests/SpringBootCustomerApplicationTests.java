@@ -26,6 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.google.gson.Gson;
 import com.springbooot.customer.api.dto.CustomerDTO;
 import com.springboot.customer.api.SpringBootCustomerApplication;
+import com.springboot.customer.api.tests.DBConfig.H2DBConfig;
+import com.springboot.customer.api.utils.Utils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootCustomerApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -47,10 +49,11 @@ public  class SpringBootCustomerApplicationTests {
 	@Test
 	public void testCreateCustomerWithMockMVC() throws Exception {
 		CustomerDTO customerDTO = new CustomerDTO();
-		customerDTO.setEmail("jaym@test.com");
-		customerDTO.setCuser("jay");
+		customerDTO.setEmail("jaym1111111@test.com");
+		customerDTO.setCuser("jay1222265");
 		customerDTO.setFirstName("jay");
-		customerDTO.setLastName("Mevada");
+		customerDTO.setLastName("Mevada");		
+		customerDTO.setPassword(Utils.getEncrpt("abc@123"));
 		this.mockMvc
 				.perform(post("/customers").content(gson.toJson(customerDTO)).contentType(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString("jay")));
@@ -59,19 +62,20 @@ public  class SpringBootCustomerApplicationTests {
 	@Test
 	public void testUpdateCustomerWithMockMVC() throws Exception {
 		CustomerDTO customerDTO = new CustomerDTO();
-		customerDTO.setEmail("jaym@test.com");
-		customerDTO.setCuser("jay1");
-		customerDTO.setFirstName("Jay1");
-		customerDTO.setLastName("test");
+		customerDTO.setEmail("jaym333@test.com");
+		customerDTO.setCuser("jay133");
+		customerDTO.setFirstName("Jay133");
+		customerDTO.setLastName("test333");
+		customerDTO.setPassword(Utils.getEncrpt("abc@123"));
 		this.mockMvc
 				.perform(put("/customers").content(gson.toJson(customerDTO)).contentType(MediaType.APPLICATION_JSON))
-				.andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString("jay1")));
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString("Jay133")));
 	}
 
 	@Test
 	public void testDeleteCustomerWithMockMVC() throws Exception {
 
-		this.mockMvc.perform(delete("/customers/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
+		this.mockMvc.perform(delete("/customers/Jaym1@test.com").accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk());
 
 	}
@@ -81,8 +85,8 @@ public  class SpringBootCustomerApplicationTests {
 	@Sql(scripts = "/commonScript/data.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testCreateRetrieveWithMockMVC() throws Exception {
 
-		this.mockMvc.perform(get("/customers/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
-				.andExpect(status().isOk()).andExpect(content().string(containsString("jaym2")));
+		this.mockMvc.perform(get("/customers/Jaym1@test.com").accept(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isOk()).andExpect(content().string(containsString("Jay1")));
 	}
 
 	
